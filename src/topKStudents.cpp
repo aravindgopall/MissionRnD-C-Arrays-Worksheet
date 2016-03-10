@@ -15,12 +15,70 @@ NOTES:
 
 #include <iostream>
 #include <malloc.h>
-
+#include<string.h>
 struct student {
 	char *name;
 	int score;
 };
-
+int min_index(struct student *,int);
 struct student ** topKStudents(struct student *students, int len, int K) {
-	return NULL;
+	if (students == NULL)
+		return NULL;
+	if (len <= 0 || K <= 0)
+		return NULL;
+
+	struct student ** result= (student **)malloc((K)*sizeof(student));
+	if (K >= len)
+	{
+		for (int i = 0; i < len; i++)
+	         result[i] = &students[i];
+
+		return  result;
+	}
+	if (K == 1)
+	{
+		int index = 0, min = students[0].score;
+		for (int i = 1; i < len; i++)
+		{
+			if (min < students[i].score)
+			{
+				index = i;
+				min = students[i].score;
+			}
+		}
+		result[0] = &students[index];
+		return result;
+	}
+
+
+		for (int i = K; i < len; i++)
+		{
+			int temp = min_index(students, K);
+			if (students[temp].score < students[i].score)
+			{
+				students[temp].score = students[i].score;
+			}
+		}
+		for (int i = 0; i < K; i++)
+		{
+			result[i] = &students[i];
+		}
+
+		return result;
+
+	}
+
+	int min_index(struct student *temp, int K)
+{
+	int min = temp[0].score, index = 0;
+	for (int i = 1; i < K; i++)
+	{
+			if (min>temp[i].score)
+			{
+				min = temp[i].score;
+				index = i;
+			}
+		
+	}
+	return index;
 }
